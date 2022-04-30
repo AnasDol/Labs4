@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.Group?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import java.lang.Integer?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="labs.view.HabitatController">
+
+    <top>
+
+        <MenuBar translateZ="1" style="-fx-background-color: linear-gradient(to top, #e3e3e3, #fafffb);">
+
+            <Menu text="Main menu">
+                <MenuItem text="Start" onAction="#generationStart"/>
+                <MenuItem text="Stop" onAction="#generationStop"/>
+            </Menu>
+
+            <Menu text="Tools">
+                <CheckMenuItem fx:id="timeCheckMenuItem" onAction="#changeTimeState" text="Show time"/>
+                <CheckMenuItem fx:id="statisticsCheckMenuItem" onAction="#changeStatisticsState" text="Show statistics"/>
+            </Menu>
+        </MenuBar>
+
+    </top>
+
+    <center>
+
+        <Pane fx:id="pane" style="-fx-background-color: #e3e3e3;">
+            <HBox fx:id="timeBox" translateZ="1" style="-fx-background-color: white;">
+                <Text fx:id="timeText" text="seconds: 0"/>
+            </HBox>
+        </Pane>
+
+    </center>
+
+    <right>
+        <VBox fx:id="vbox" translateZ="1" style="-fx-background-color: #f7faf8;" spacing="8">
+            <Text text="Generation: "/>
+            <HBox>
+                <Button fx:id="generationStartButton" text="Start" onAction="#generationStart" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                <Button fx:id="generationStopButton" text="Stop" onAction="#generationStop" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+            </HBox>
+            <Text text="Movement: "/>
+            <HBox>
+                <Text text="Warrior: "/>
+                <Button fx:id="warriorMovementStartButton" text="Start" onAction="#warriorMovementStart" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                <Button fx:id="warriorMovementStopButton" text="Stop" onAction="#warriorMovementStop" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+            </HBox>
+            <HBox>
+                <Text text="Priority: "/>
+                <ComboBox fx:id="warriorComboBox"/>
+            </HBox>
+            <HBox>
+                <Text text="Worker: "/>
+                <Button fx:id="workerMovementStartButton" text="Start" onAction="#workerMovementStart" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                <Button fx:id="workerMovementStopButton" text="Stop" onAction="#workerMovementStop" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+            </HBox>
+            <HBox>
+                <Text text="Priority: "/>
+                <ComboBox fx:id="workerComboBox"/>
+            </HBox>
+            <CheckBox fx:id="statisticsCheckBox" text="Show the information" onAction="#changeStatisticsState"/>
+            <fx:define>
+                <ToggleGroup fx:id="group" />
+            </fx:define>
+            <RadioButton fx:id="timeRadioButton1" text="Show the duration" onAction="#changeTimeState" toggleGroup="$group"/>
+            <RadioButton fx:id="timeRadioButton2" text="Hide the duration" onAction="#changeTimeState" toggleGroup="$group"/>
+            <Separator/>
+            <HBox>
+                <Text text="Probability of the birth (Worker): "/>
+                <TextField fx:id="P1TextField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Text text="Probability of the birth (Red ant): "/>
+                <TextField fx:id="P2TextField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Text text="Period: "/>
+                <TextField fx:id="durationTextField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Text text="Warrior lifetime: "/>
+                <TextField fx:id="warriorLifetimeTextField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Text text="Worker lifetime: "/>
+                <TextField fx:id="workerLifetimeTextField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <Button fx:id="saveButton" text="Save changes" onAction="#saveSettings"/>
+            <Separator/>
+            <Button fx:id="listButton" text="Show current objects" onAction="#openTable"/>
+            <Text fx:id="statisticsText" text="The simulation hasn't been run yet."/>
+
+        </VBox>
+    </right>
+
+</BorderPane>
