@@ -3,6 +3,8 @@ package labs.view;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -51,7 +54,14 @@ public class HabitatController {
     @FXML
     private TextField warriorLifetimeTextField, workerLifetimeTextField;
     @FXML
-    ComboBox<Integer> warriorComboBox, workerComboBox;
+    private ComboBox<Integer> warriorComboBox, workerComboBox;
+    @FXML
+    private TextField NTextField, receiverTextField;
+    @FXML
+    private VBox vbox;
+    private ListView<String> onlineListView;
+    @FXML
+    private Text usernameText;
     @FXML
     private Pane pane;
 
@@ -113,6 +123,7 @@ public class HabitatController {
 
         P1TextField.setTextFormatter(new TextFormatter<String>(integerFilter));
         P2TextField.setTextFormatter(new TextFormatter<String>(integerFilter));
+        NTextField.setTextFormatter(new TextFormatter<String>(integerFilter));
         durationTextField.setTextFormatter(new TextFormatter<String>(doubleFilter));
         warriorLifetimeTextField.setTextFormatter(new TextFormatter<String>(integerFilter));
         workerLifetimeTextField.setTextFormatter(new TextFormatter<String>(integerFilter));
@@ -138,6 +149,21 @@ public class HabitatController {
         setAnthills();
 
         setComboBoxes();
+
+        onlineListView = new ListView<String>(viewModel.getUserList());
+        vbox.getChildren().add(onlineListView);
+
+        MultipleSelectionModel<String> langsSelectionModel = onlineListView.getSelectionModel();
+        // устанавливаем слушатель для отслеживания изменений
+        langsSelectionModel.selectedItemProperty().addListener(new ChangeListener<String>(){
+
+            public void changed(ObservableValue<? extends String> changed, String oldValue, String newValue){
+
+                receiverTextField.setText(newValue);
+            }
+        });
+
+        usernameText.setText("Ваш уникальный идентификатор: "+viewModel.getUsername());
 
     }
 
@@ -234,6 +260,10 @@ public class HabitatController {
             WorkerBaseAI.setUserPriority(workerComboBox.getValue());
         });
 
+    }
+
+    public void request() {
+        viewModel.request(Integer.parseInt(NTextField.getText()), receiverTextField.getText());
     }
 
 }

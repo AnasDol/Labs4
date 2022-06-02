@@ -150,6 +150,72 @@ public final class DataModelManager implements DataModel {
 
     }
 
+    public void addAnts(ArrayList<String> ants_info) {
+
+        for (String info : ants_info) {
+
+            String[] arr = info.split(" ");
+
+            double birthX = Double.parseDouble(arr[0]);
+            double birthY = Double.parseDouble(arr[1]);
+
+            double targetX = Double.parseDouble(arr[2]);
+            double targetY = Double.parseDouble(arr[3]);
+
+            Ant.Type type;
+            if (arr[4].equalsIgnoreCase("Warrior")) type = Ant.Type.Warrior;
+            else type = Ant.Type.Worker;
+
+            Ant.Color color;
+            if (arr[5].equalsIgnoreCase("Red")) color = Ant.Color.Red;
+            else color = Ant.Color.Black;
+
+            int health = Integer.parseInt(arr[6]);
+            int lifeTime = Integer.parseInt(arr[7]);
+            int birthTime = Integer.parseInt(arr[8]);
+
+
+
+            Ant ant;
+
+            int rand1 = (int) (Math.random() * 100);
+            int rand2 = (int) (Math.random() * 100);
+
+            // строители генерятся везде
+            // воины генерятся на расстоянии до 200 (по осям) от своего муравейника
+
+            double rad = 200;
+            double x, y;
+
+            Thread thread;
+
+            if (type == Ant.Type.Warrior && color == Ant.Color.Black) // воин
+            {
+                ant = new Warrior(index, birthX, birthY, color, health, lifeTime, birthTime, 20);
+                ants.add(ant);
+                thread = new Thread(warriorThreadGroup, new WarriorBaseAI(), Integer.toString(ant.index));
+            }
+            else  // строитель
+            {
+                ant = new Worker(index, birthX, birthY, color, health, lifeTime, birthTime);
+                ants.add(ant);
+                thread = new Thread(warriorThreadGroup, new WarriorBaseAI(), Integer.toString(ant.index));
+            }
+
+            thread.setDaemon(true);
+            thread.start();
+
+            ids.add(index);
+            System.out.println(ids.toString());
+            map.put(index,birthTime);
+            System.out.println(map.toString());
+            index++;
+
+
+        }
+
+    }
+
 
 
 }

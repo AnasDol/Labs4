@@ -4,10 +4,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.Group?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import java.lang.Integer?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="labs.view.HabitatController">
 
     <top>
@@ -38,7 +34,7 @@
     </center>
 
     <right>
-        <VBox fx:id="vbox" translateZ="1" style="-fx-background-color: #f7faf8;" spacing="8">
+        <VBox fx:id="vbox" translateZ="1" style="-fx-background-color: #f7faf8;" spacing="4">
             <Text text="Generation: "/>
             <HBox>
                 <Button fx:id="generationStartButton" text="Start" onAction="#generationStart" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
@@ -94,6 +90,14 @@
             <Separator/>
             <Button fx:id="listButton" text="Show current objects" onAction="#openTable"/>
             <Text fx:id="statisticsText" text="The simulation hasn't been run yet."/>
+            <Separator/>
+            <HBox>
+                <Button fx:id="requestButton" text="Request" onAction="#request"/>
+                <TextField fx:id="NTextField" text="5"/>
+                <Text text=" objects from "/>
+                <TextField fx:id="receiverTextField" text="name"/>
+            </HBox>
+            <Text fx:id="usernameText" text="Ваш уникальный идентификатор: "/>
 
         </VBox>
     </right>

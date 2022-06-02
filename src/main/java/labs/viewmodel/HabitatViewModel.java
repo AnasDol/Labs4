@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import labs.model.Connection;
 import labs.model.DataModel;
 import labs.model.DataModelManager;
 import labs.model.ants.Ant;
@@ -22,6 +23,7 @@ import labs.model.behaviour.WorkerBaseAI;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 public class HabitatViewModel {
 
@@ -40,6 +42,15 @@ public class HabitatViewModel {
     TableView<Map.Entry<Integer, Integer>> tableView;
 
     private DataModel dataModel;
+
+    private Connection connection;
+    public Connection getConnection() {return connection;}
+    private ObservableList<String> userList;
+    public ObservableList<String> getUserList(){return userList;};
+
+    public String getUsername() {
+        return connection.getUsername();
+    }
 
     public HabitatViewModel(DataModel dataModel) {
         this.dataModel = dataModel;
@@ -61,6 +72,10 @@ public class HabitatViewModel {
         initUpdateTimer();
         timeText = new SimpleStringProperty("seconds: 0");
         tableView = new TableView<>();
+
+        connection = new Connection(Integer.toString(new Random().nextInt()), dataModel, this);
+        userList = FXCollections.observableArrayList(connection.getUserList());
+
     }
 
     public void initGenerationTimer() {
@@ -216,6 +231,12 @@ public class HabitatViewModel {
         }
     }
 
+    public void request(int N, String name) {
+        connection.sendMessage("##request##");
+        connection.sendMessage(name);
+        connection.sendMessage(Integer.toString(N));
+    }
+
 
     public BooleanProperty workingProperty() {
         return working;
@@ -244,4 +265,17 @@ public class HabitatViewModel {
     public IntegerProperty lifeimeWarriorProperty() { return lifetimeWarrior; }
     public IntegerProperty lifeimeWorkerProperty() { return lifetimeWorker; }
 
+    public void updateImages() {
+
+        images.clear();
+        for (Ant ant:dataModel.getAnts()) {
+            images.add(ant.getImage());
+        }
+
+    }
+
+    public void updateUserList(ArrayList<String> ulist) {
+        userList.clear();
+        userList.addAll(ulist);
+    }
 }

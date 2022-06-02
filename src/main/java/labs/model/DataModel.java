@@ -2,6 +2,7 @@ package labs.model;
 
 import labs.model.ants.Ant;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -39,4 +40,8 @@ public interface DataModel {
     int getLifeTimeWorker();
 
     Ant getLast();
+
+    //Connection getConnection();
+
+    void addAnts(ArrayList<String> ants_info);
 }

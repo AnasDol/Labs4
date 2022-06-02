@@ -27,7 +27,50 @@ public abstract class Ant {
     public static double BlackAnthillX = 650;
     public static double BlackAnthillY = 450;
 
-    Ant(int index, double x, double y, Type type, Color color, int health,
+    public Ant (int index, String info) {
+
+        this.index = index;
+
+        String[] arr = info.split(" ");
+
+        this.birthX = Double.parseDouble(arr[0]);
+        this.birthY = Double.parseDouble(arr[1]);
+
+        this.targetX = Double.parseDouble(arr[2]);
+        this.targetY = Double.parseDouble(arr[3]);
+
+        if (arr[4] == "Warrior") this.type = Type.Warrior;
+        else if (arr[4] == "Worker") this.type = Type.Worker;
+
+        if (arr[5] == "Red") this.color = Color.Red;
+        else if (arr[5] == "Black") this.color = Color.Black;
+
+        this.health = Integer.parseInt(arr[6]);
+        this.lifeTime = Integer.parseInt(arr[7]);
+        this.birthTime = Integer.parseInt(arr[8]);
+
+        if (color == Color.Red) {
+            targetX = RedAnthillX;
+            targetY = RedAnthillY;
+        } else {
+            targetX = BlackAnthillX;
+            targetY = BlackAnthillY;
+        }
+
+        image = new ImageView();
+        try {
+            setImage();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        image.setFitWidth(64);
+        image.setFitHeight(64);
+        image.setX(birthX-image.getFitWidth()/2);
+        image.setY(birthY-image.getFitHeight()/2);
+
+    }
+
+    public Ant(int index, double x, double y, Type type, Color color, int health,
         int lifeTime, int birthTime) {
 
         this.index = index;
@@ -82,6 +125,30 @@ public abstract class Ant {
         n_red_worker = 0;
         n_black_warrior = 0;
         n_black_worker = 0;
+    }
+
+    public String toString() {
+        // -> string format
+        String str = "";
+        str+=Double.toString(birthX);
+        str+=" ";
+        str+=Double.toString(birthY);
+        str+=" ";
+        str+=Double.toString(targetX);
+        str+=" ";
+        str+=Double.toString(targetY);
+        str+=" ";
+        str+= type.toString();
+        str+=" ";
+        str+= color.toString();
+        str+=" ";
+        str+=Integer.toString(health);
+        str+=" ";
+        str+=Integer.toString(lifeTime);
+        str+=" ";
+        str+=Integer.toString(birthTime);
+        System.out.println(str);
+        return str;
     }
 
 }

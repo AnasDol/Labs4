@@ -13,8 +13,9 @@ public class SimulationApp extends Application {
 
         stage.setHeight(700);
         stage.setWidth(1200);
+
         ModelFactory mf = new ModelFactory();
-        ViewModelFactory vmf = new ViewModelFactory(mf);
+        ViewModelFactory vmf = new ViewModelFactory(stage, mf);
         ViewHandler vh = new ViewHandler(stage, vmf);
         vh.start("HabitatView");
 
